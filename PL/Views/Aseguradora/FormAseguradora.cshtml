@@ -50,10 +50,35 @@
                     </div>
                 </div>
 
+                   <div class="col-md-4">
+
+                        @Html.LabelFor(model=> model.Imagen)
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-image"></i></span>
+                            <input type='file' class="form-control" name="fuImage" onchange="readURL(this);" />
+                        </div>
+
+                        @if (Model.Imagen != null)
+                        {
+
+                            <img id="Img" src="data:image/*;base64,Model.Imagen" style="width:auto ; height:100px" />
+
+                        }
+                        else
+                        {
+                            <img id="Img" src="~/images/defecto.jpg" style="width:auto ; height:100px" />
+                        }
+
+
+                    </div>
+                    @Html.HiddenFor(model => model.Imagen)
+
+
                 <div class="col">
                     <div class="col-md-3">
                         <input type="submit" value="Guardar" class="btn btn-success" />
-                        @Html.ActionLink("RegresarAseguradora", "GetAllAseguradora", "Aseguradora", htmlAttributes: new { @class = "btn btn-danger" })
+                        @Html.ActionLink("RegresarAseguradora", "AseguradoraGetAll", "Aseguradora", htmlAttributes: new { @class = "btn btn-danger" })
                     </div>
                 </div>
             }

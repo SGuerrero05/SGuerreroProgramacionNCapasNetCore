@@ -1,0 +1,55 @@
+﻿@model ML.Empresa
+@{
+    ViewBag.Title = "EmpresaGetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EmpresaGetAll</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <h5>Seleccione una Empresa para editarla o + para agregar una nueva...</h5>
+        <hr />
+    </div>
+
+</div>
+
+@*<div class="row">*@
+<div style="float:right;">
+    @Html.ActionLink("+", "EmpresaForm", "Empresa", htmlAttributes: new { @class = "btn btn-success" })
+
+</div>
+
+<br>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <td>Editar</td>
+            <td class="hidden">IdEmpresa</td>
+            <td>Nombre</td>
+            <td>Telefono</td>
+            <td>Email</td>
+            <td>DireccionWeb</td>
+            <td>Logo</td>
+            <td>Eliminar</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ML.Empresa empresa in Model.Empresas)
+        {
+            <tr>
+                <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("EmpresaForm", "Empresa", new { IdEmpresa = empresa.IdEmpresa})"></a></td>
+                <td class="hidden">@empresa.IdEmpresa</td>
+                <td>@empresa.Nombre</td>
+                <td>@empresa.Telefono</td>
+                <td>@empresa.Email</td>
+                <td>@empresa.DireccionWeb</td>
+                <td>@empresa.Logo</td>
+                
+
+                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("EmpresaDelete", "Empresa", new { IdEmpresa= empresa.IdEmpresa})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+            </tr>
+        }
+    </tbody>
+</table>

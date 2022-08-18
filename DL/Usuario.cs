@@ -9,6 +9,7 @@ namespace DL
         {
             Aseguradoras = new HashSet<Aseguradora>();
             Direccions = new HashSet<Direccion>();
+            Polizas = new HashSet<Poliza>();
         }
 
         public int IdUsuario { get; set; }
@@ -24,15 +25,15 @@ namespace DL
         public string? Celular { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public string? Curp { get; set; }
-        public string Imagen { get; set; }
+        public string? Imagen { get; set; }
+        public bool Status { get; set; }
 
         public virtual Rol? IdRolNavigation { get; set; }
         public virtual ICollection<Aseguradora> Aseguradoras { get; set; }
         public virtual ICollection<Direccion> Direccions { get; set; }
-
-
+        public virtual ICollection<Poliza> Polizas { get; set; }
         //AS
-        public string NombreRol { get; set; } 
+        public string NombreRol { get; set; }
 
         public string NombreColonia { get; set; }
 
@@ -46,7 +47,7 @@ namespace DL
 
         public int IdDireccion { get; set; }
 
-        public string Calle {get; set; }
+        public string Calle { get; set; }
 
         public string NumeroExterior { get; set; }
 

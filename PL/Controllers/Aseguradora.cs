@@ -2,7 +2,7 @@
 
 namespace PL.Controllers
 {
-    public class AseguradoraController : Controller
+    public class Aseguradora : Controller
     {
         [HttpGet]
         public ActionResult AseguradoraGetAll()
@@ -26,29 +26,37 @@ namespace PL.Controllers
         {
             ML.Aseguradora aseguradora = new ML.Aseguradora();
             aseguradora.Usuario = new ML.Usuario();
-            ML.Result resultUsuario = BL.Usuario.UsuarioGetAll();
-            if(resultUsuario.Correct)
+            ML.Usuario usuario = new ML.Usuario();
+            ML.Result resultUsuario = BL.Usuario.UsuarioGetAll(usuario);
+            if (resultUsuario.Correct)
             {
                 if (IdAseguradora == null)
                 {
-                    ML.Result result = BL.Aseguradora.AseguradoraAdd(aseguradora);
+                    aseguradora.Usuario = new ML.Usuario();
                     aseguradora.Usuario.Usuarios = resultUsuario.Objects;
-                    return View(aseguradora);
+
+                    return View (aseguradora);
                 }
                 else
                 {
                     ML.Result result = BL.Aseguradora.AseguradoraGetById(IdAseguradora.Value);
                     if (result.Correct)
                     {
-                        aseguradora.Usuario = new ML.Usuario();
+                        
                         aseguradora = (ML.Aseguradora)result.Object;
                         aseguradora.Usuario.Usuarios = resultUsuario.Objects;
+                        return View(aseguradora);
                     }
                     else
                     {
                         ViewBag.Mensaje = "Ocurrio un error";
+                        return View("ModalAseguradora");
                     }
                 }
+            }
+            else
+            {
+                ViewBag.Mensaje = "Ocurrio un error de consulta";
             }
             return View(aseguradora);
         }
@@ -56,15 +64,39 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult FormAseguradora(ML.Aseguradora aseguradora)
         {
+            IFormFile imagen = Request.Form.Files["fuImage"];
+            if (imagen != null)
+            {
+                byte[] ImagenByte = ConvertToBytes(imagen);
+                aseguradora.Imagen = Convert.ToBase64String(ImagenByte);
+
+            }
+
             if (aseguradora.IdAseguradora == 0)
             {
                 ML.Result result = BL.Aseguradora.AseguradoraAdd(aseguradora);
-                ViewBag.Mensaje = "Registro exitoso";
+
+                if (result.Correct)
+                {
+                    ViewBag.Mensaje = "Registro exitoso";
+                }
+                else
+                {
+                    ViewBag.Mensaje = "Ocurrio un error" + result.ErrorMessage;
+                }
             }
             else
             {
                 ML.Result result = BL.Aseguradora.AseguradoraUpdate(aseguradora);
-                ViewBag.Mensaje = "Modificacion exitosa";
+                if (result.Correct)
+                {
+                    ViewBag.Mensaje = "Modiciacion exitosa";
+                }
+                else
+                {
+                    ViewBag.Mensaje = "Ocurrio un error";
+                }
+
             }
             return View("ModalAseguradora");
         }
@@ -86,6 +118,16 @@ namespace PL.Controllers
                 ViewBag.Mensaje = "Ocurrio un error";
             }
             return View("ModalAseguradora");
+        }
+
+        public static byte[] ConvertToBytes(IFormFile imagen)
+        {
+            using var fileStream = imagen.OpenReadStream();
+
+            byte[] bytes = new byte[fileStream.Length];
+            fileStream.Read(bytes, 0, (int)fileStream.Length);
+
+            return bytes;
         }
     }
 }

@@ -17,18 +17,23 @@ namespace BL
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Estados.FromSqlRaw($"EstadoGetByIdPais{IdPais}").AsEnumerable().FirstOrDefault();
+                    
+                    var query = context.Estados.FromSqlRaw($"EstadoGetByIdPais {IdPais}").ToList();
+                    result.Objects = new List<object>();
+
                     if (query != null)
                     {
+                        foreach (var obj in query) {
 
-                        ML.Estado estado = new ML.Estado();
+                            ML.Estado estado = new ML.Estado();
 
-                        estado.IdEstado = query.IdEstado;
-                        estado.Nombre = query.Nombre;
-                        estado.Pais = new ML.Pais();
-                        estado.Pais.IdPais = query.IdPais.Value;
+                            estado.IdEstado = obj.IdEstado;
+                            estado.Nombre = obj.Nombre;
+                            estado.Pais = new ML.Pais();
+                            estado.Pais.IdPais = obj.IdPais.Value;
 
-                        result.Object = estado;
+                            result.Objects.Add(estado);
+                        }
 
                         result.Correct = true;
                     }

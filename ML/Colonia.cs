@@ -13,9 +13,9 @@ namespace ML
 
         public string? CodigoPostal { get; set; }
 
-        public ML.Municipio Municipio { get; set; }
+        public ML.Municipio? Municipio { get; set; }
 
-        public List<object> Colonias { get; set; }
+        public List<object>? Colonias { get; set; }
 
     }
 }

@@ -16,7 +16,7 @@ namespace BL
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"AseguradoraAdd {aseguradora.IdAseguradora},'{aseguradora.Nombre}','{aseguradora.FechaCreacion}','{aseguradora.FechaModificacion}',{aseguradora.Usuario.IdUsuario}");
+                    var query = context.Database.ExecuteSqlRaw($"AseguradoraAdd '{aseguradora.Nombre}',{aseguradora.Usuario.IdUsuario},'{aseguradora.Imagen}'");
                     if (query > 0)
                     {
                         result.Correct = true;
@@ -44,8 +44,8 @@ namespace BL
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"AseguradoraUpdate {aseguradora.IdAseguradora},'{aseguradora.Nombre}','{aseguradora.FechaCreacion}','{aseguradora.FechaModificacion}',{aseguradora.Usuario.IdUsuario}");
-                    if (query >= 1)
+                    var query = context.Database.ExecuteSqlRaw($"AseguradoraUpdate {aseguradora.IdAseguradora},'{aseguradora.Nombre}',{aseguradora.Usuario.IdUsuario},'{aseguradora.Imagen}'");
+                    if (query > 0 )
                     {
                         result.Correct = true;
                     }
@@ -73,7 +73,7 @@ namespace BL
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
                     var query = context.Database.ExecuteSqlRaw($"AseguradoraDelete {aseguradora.IdAseguradora}");
-                    if (query > 1)
+                    if (query > 0)
                     {
                         result.Correct = true;
                     }
@@ -115,6 +115,7 @@ namespace BL
                             aseguradora.FechaModificacion = obj.FechaModificacion.ToString();
                             aseguradora.Usuario = new ML.Usuario();
                             aseguradora.Usuario.IdUsuario = obj.IdUsuario.Value;
+                            aseguradora.Imagen = obj.Imagen;
 
                             result.Objects.Add(aseguradora);
                         }
@@ -134,6 +135,7 @@ namespace BL
             }
             return result;
         }
+
         public static ML.Result AseguradoraGetById(int IdAseguradora)
         {
             ML.Result result = new ML.Result();
@@ -141,7 +143,7 @@ namespace BL
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Aseguradoras.FromSqlRaw($"AseguradoraGetById{IdAseguradora}").AsEnumerable().FirstOrDefault();
+                    var query = context.Aseguradoras.FromSqlRaw($"AseguradoraGetById {IdAseguradora}").AsEnumerable().FirstOrDefault();
                     if (query != null)
                     {
                         
@@ -153,6 +155,7 @@ namespace BL
                             aseguradora.FechaModificacion = query.FechaModificacion.ToString();
                         aseguradora.Usuario = new ML.Usuario();
                         aseguradora.Usuario.IdUsuario = query.IdUsuario.Value;
+                        aseguradora.Imagen = query.Imagen;
 
                         result.Object = aseguradora;
                         

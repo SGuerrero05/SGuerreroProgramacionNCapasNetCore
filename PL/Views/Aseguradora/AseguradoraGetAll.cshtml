@@ -31,6 +31,7 @@
             <td>FechaCreacion</td>
             <td>FechaModificacion</td>
             <td>IdUsuario</td>
+            <td>Imagen</td>
             <td>Eliminar</td>
         </tr>
     </thead>
@@ -44,6 +45,18 @@
                 <td>@aseguradora.FechaCreacion</td>
                 <td>@aseguradora.FechaModificacion</td>
                 <td>@aseguradora.Usuario.IdUsuario</td>
+                <td>    @if (Model.Imagen != null)
+                        {
+
+                            <img id="Img" src="data:image/*;base64,Model.Imagen" style="width:auto ; height:100px" />
+
+                        }
+                        else
+                        {
+                            <img id="Img" src="~/images/defecto.jpg" style="width:auto ; height:100px" />
+                        }
+                        </td>    
+                
 
                 <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("DeleteAseguradora", "Aseguradora", new { IdAseguradora= aseguradora.IdAseguradora})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
             </tr>

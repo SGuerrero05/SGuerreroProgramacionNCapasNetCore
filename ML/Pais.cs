@@ -10,7 +10,7 @@ namespace ML
     {
         public int IdPais { get; set; }
         public string? Nombre { get; set; }
-        public List<object> Paises { get; set; }
+        public List<object>? Paises { get; set; }
 
     }
 }

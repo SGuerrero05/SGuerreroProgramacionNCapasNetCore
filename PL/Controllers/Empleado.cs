@@ -8,10 +8,6 @@ namespace PL.Controllers
         public ActionResult EmpleadoGetAll()
         {
             ML.Empleado empleado = new ML.Empleado();
-            empleado.Nombre = (empleado.Nombre == null) ? "" : empleado.Nombre;
-            empleado.ApellidoPaterno = (empleado.ApellidoPaterno == null) ? "" : empleado.ApellidoPaterno;
-            empleado.ApellidoMaterno = (empleado.ApellidoMaterno == null) ? "" : empleado.ApellidoMaterno;
-
             ML.Result result = BL.Empleado.EmpleadoGetAll(empleado);
             ML.Result resultEmpresa = BL.Empresa.EmpresaGetAll();
             if (result.Correct)
@@ -30,10 +26,6 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult EmpleadoGetAll(ML.Empleado empleado)
         {
-            empleado.Nombre = (empleado.Nombre == null) ? "" : empleado.Nombre;
-            empleado.ApellidoPaterno = (empleado.ApellidoPaterno == null) ? "" : empleado.ApellidoPaterno;
-            empleado.ApellidoMaterno = (empleado.ApellidoMaterno == null) ? "" : empleado.ApellidoMaterno;
-
             ML.Result result = BL.Empleado.EmpleadoGetAll(empleado);
             if (result.Correct)
             {

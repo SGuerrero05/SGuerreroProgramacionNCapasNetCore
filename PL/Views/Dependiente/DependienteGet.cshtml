@@ -1,0 +1,82 @@
+﻿@model ML.Dependiente
+@{
+    ViewBag.Title = "DependienteGet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DependienteGet</h2>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h5>Seleccione un Dependiente para editarlo o + para agregar uno nuevo...</h5>
+        <hr />
+    </div>
+
+</div>
+
+@using (Html.BeginForm("DependienteGet","Dependiente",FormMethod.Post,new{enctype = "multipart/form-data"}))
+{      <div class="col">
+                    <div class="col-md-4 col-lg-12 col-sm-6">
+                        @Html.LabelFor(model => model.Nombre)
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-12 col-sm-6">
+                        @Html.LabelFor(model => model.ApellidoPaterno)
+                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                        @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-12 col-sm-6">
+                        @Html.LabelFor(model => model.ApellidoMaterno)
+                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                        @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                    </div>
+                </div>
+
+                 <div class="col">
+                     <div class="col-md-3">
+                         <input type ="submit" value="Buscar" class="btn btn-success"/>
+                     </div>
+                       </div>
+}
+          
+@*<div class="row">*@
+<div style="float:right;">
+    @Html.ActionLink("+", "DependienteForm", "Dependiente", htmlAttributes:new {@class = "btn btn-success"})
+
+</div>
+
+<br>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <td>Editar</td>
+            <td>Nombre</td>
+            <td>Eliminar</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ML.Dependiente dependiente in Model.Dependientes)
+            {
+        <tr>
+            <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("DependienteForm", "Dependiente", new { IdDependiente = dependiente.IdDependiente})"></a></td>
+           <td class="hidden">@dependiente.IdDependiente</td>
+            <td>@dependiente.Empleado.NumeroEmpleado</td>
+            <td>@dependiente.Nombre @dependiente.ApellidoPaterno @dependiente.ApellidoMaterno</td>
+
+
+              
+            <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("DependienteDelete", "Dependiente", new { IdDependiente=dependiente.IdDependiente})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+        </tr>
+            }
+    </tbody>
+</table>

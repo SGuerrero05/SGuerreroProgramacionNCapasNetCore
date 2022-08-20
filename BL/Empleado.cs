@@ -100,6 +100,10 @@ namespace BL
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
+                    empleadoBusquedaAbierta.Nombre = (empleadoBusquedaAbierta.Nombre == null) ? "" : empleadoBusquedaAbierta.Nombre;
+                    empleadoBusquedaAbierta.ApellidoPaterno = (empleadoBusquedaAbierta.ApellidoPaterno == null) ? "" : empleadoBusquedaAbierta.ApellidoPaterno;
+                    empleadoBusquedaAbierta.ApellidoMaterno = (empleadoBusquedaAbierta.ApellidoMaterno == null) ? "" : empleadoBusquedaAbierta.ApellidoMaterno;
+
 
                     var query = context.Empleados.FromSqlRaw($"EmpleadoGetAll '{empleadoBusquedaAbierta.Nombre}', '{empleadoBusquedaAbierta.ApellidoPaterno}','{empleadoBusquedaAbierta.ApellidoMaterno}'").ToList();
                     result.Objects = new List<object>();
@@ -117,7 +121,7 @@ namespace BL
                             empleado.Telefono = obj.Telefono;
                             empleado.FechaNacimiento = obj.FechaNacimiento.Value;
                             empleado.NSS = obj.Nss;
-                            empleado.FechaIngreso = obj.FechaIngreso.Value;
+                            empleado.FechaIngreso = obj.FechaIngreso;
                             empleado.FOTO = obj.Foto;
                             empleado.Empresa = new ML.Empresa();
                             empleado.Empresa.IdEmpresa = obj.IdEmpresa.Value;

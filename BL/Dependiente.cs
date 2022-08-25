@@ -141,14 +141,14 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result DependienteGetBy(int IdDependiente)
+        public static ML.Result DependienteGetById(int IdDependiente)
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var obj = context.Dependientes.FromSqlRaw($"DependienteGetByEmpleado {IdDependiente}").AsEnumerable().FirstOrDefault();
+                    var obj = context.Dependientes.FromSqlRaw($"DependienteGetById {IdDependiente}").AsEnumerable().FirstOrDefault();
                     if (obj != null)
                     {
                         

@@ -60,7 +60,15 @@
     <thead>
         <tr>
             <td>Editar</td>
+            <td class="hidden">IdDependiente</td>
+            <td>NumeroEmpleado</td>
             <td>Nombre</td>
+             <td>FechaNacimiento</td>
+              <td>EstadoCivil</td>
+               <td>Genero</td>
+                <td>Telefono</td>
+              <td>RFC</td>
+               <td>DependienteTipo</td>
             <td>Eliminar</td>
         </tr>
     </thead>
@@ -72,9 +80,12 @@
            <td class="hidden">@dependiente.IdDependiente</td>
             <td>@dependiente.Empleado.NumeroEmpleado</td>
             <td>@dependiente.Nombre @dependiente.ApellidoPaterno @dependiente.ApellidoMaterno</td>
-
-
-              
+            <td>@dependiente.FechaNacimiento</td>
+            <td>@dependiente.EstadoCivil</td>
+              <td>@dependiente.Genero</td>
+              <td>@dependiente.Telefono</td>
+              <td>@dependiente.Rfc</td>
+              <td>@dependiente.DependienteTipo.IdDependienteTipo</td>
             <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("DependienteDelete", "Dependiente", new { IdDependiente=dependiente.IdDependiente})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
         </tr>
             }

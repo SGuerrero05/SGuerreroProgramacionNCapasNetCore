@@ -29,6 +29,7 @@ namespace BL
 
                             result.Objects.Add(dependienteTipo);
                         }
+                        result.Correct = true;
                     }
                     else
                     {

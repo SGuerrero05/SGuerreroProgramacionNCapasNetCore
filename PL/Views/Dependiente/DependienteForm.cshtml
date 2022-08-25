@@ -3,11 +3,15 @@
     ViewBag.Title = "DependienteForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 <h2>DependienteForm</h2>
 
 <h2>Form</h2>
-<div class=" ="row">
+<div class="row">
 <div class="container">
     <div class="col-md-12">
         <h5>Ingrese los datos del dependiente</h5>
@@ -29,6 +33,15 @@
                         @Html.LabelFor(model => model.IdDependiente)
                         @Html.TextBoxFor(model => model.IdDependiente, new { @class = "form-control", @id = "txtIdDependiente" })
                         @Html.ValidationMessageFor(model => model.IdDependiente)
+
+                    </div>
+                </div>
+
+                        <div class="col">
+                    <div class="col-md-4 col-lg-12 col-sm-6">
+                        @Html.LabelFor(model => model.Empleado.NumeroEmpleado)
+                        @Html.TextBoxFor(model => model.Empleado.NumeroEmpleado, new { @class = "form-control", @id = "txtNumeroEmpleado" })
+                        @Html.ValidationMessageFor(model => model.Empleado.NumeroEmpleado)
 
                     </div>
                 </div>
@@ -63,7 +76,7 @@
                   <div class="col">
                     <div class="col-md-4 col-lg-12 col-sm-6">
                         @Html.LabelFor(model => model.FechaNacimiento)
-                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento" })
+                        @Html.TextBoxFor(model => model.FechaNacimiento, new {@type="date", @class = "form-control", @id = "txtFechaNacimiento" })
                         @Html.ValidationMessageFor(model => model.FechaNacimiento)
 
                     </div>
@@ -71,9 +84,18 @@
 
                   <div class="col">
                     <div class="col-md-4 col-lg-12 col-sm-6">
-                        @Html.LabelFor(model => model.ApellidoPaterno)
-                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
-                        @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                        @Html.LabelFor(model => model.EstadoCivil)
+                        @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control", @id = "txtEstadoCivil" })
+                        @Html.ValidationMessageFor(model => model.EstadoCivil)
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-lg-12 col-sm-6">
+                        @Html.LabelFor(model => model.Genero)
+                        @Html.TextBoxFor(model => model.Genero, new { @class = "form-control", @id = "txtGenero" })
+                        @Html.ValidationMessageFor(model => model.Genero)
 
                     </div>
                 </div>
@@ -89,28 +111,18 @@
 
                 <div class="col">
                     <div class="col-md-4 col-lg-12 col-sm-6">
-                        @Html.LabelFor(model => model.Email)
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail" })
-                        @Html.ValidationMessageFor(model => model.Email)
+                        @Html.LabelFor(model => model.Rfc)
+                        @Html.TextBoxFor(model => model.Rfc, new { @class = "form-control", @id = "txtRFC" })
+                        @Html.ValidationMessageFor(model => model.Rfc)
 
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="col-md-4 col-lg-12 col-sm-6">
-                        @Html.LabelFor(model => model.DireccionWeb)
-                        @Html.TextBoxFor(model => model.DireccionWeb, new { @class = "form-control", @id = "txtDireccionWeb" })
-                        @Html.ValidationMessageFor(model => model.DireccionWeb)
-
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="col-md-4 col-lg-12 col-sm-6">
-                        @Html.LabelFor(model => model.Logo)
-                        @Html.TextBoxFor(model => model.Logo, new { @class = "form-control", @id = "txtLogo" })
-                        @Html.ValidationMessageFor(model => model.Logo)
-
+                
+               <div class="col">
+                    <div class="col-md-4 col-12 col-sm-6">
+                        @Html.LabelFor(model => model.DependienteTipo.IdDependienteTipo)
+                        @Html.DropDownListFor(model => model.DependienteTipo.IdDependienteTipo, new SelectList(Model.DependienteTipo.DependienteTipos, "IdDependienteTipo", "IdDependienteTipo"), "Selecciona su dependiente correspondiente", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DependienteTipo.IdDependienteTipo)
                     </div>
                 </div>
 

@@ -44,14 +44,14 @@ namespace PL.Controllers
         {
             if (numeroEmpleado == null)
             {
-               // numeroEmpleado = Session["NumeroEmpleado"].ToString();
+                numeroEmpleado = HttpContext.Session.GetString("NumeroEmpleado");
             }
             ML.Dependiente dependiente = new ML.Dependiente();
             ML.Result resultDependientes = BL.Dependiente.DependienteGetByEmpleado(numeroEmpleado);
 
             if (resultDependientes.Correct)
             {
-                // Session["NumeroEmpleado"] = numeroEmpleado;
+                HttpContext.Session.SetString("NumeroEmpleado", numeroEmpleado);
                 dependiente.Dependientes = new List<object>();
                 dependiente.Dependientes = resultDependientes.Objects;
                 return View(dependiente);
@@ -69,24 +69,26 @@ namespace PL.Controllers
         public ActionResult DependienteForm(int? IdDependiente)
         {
             ML.Dependiente dependiente = new ML.Dependiente();
-            ML.Result resultDependienteTipos = BL.DependienteTipo.DependienteTipoGetAll();
-            if (resultDependienteTipos.Correct)
+            dependiente.DependienteTipo = new ML.DependienteTipo();
+            ML.Result resultDependienteTipo = BL.DependienteTipo.DependienteTipoGetAll();
+           
+            if (resultDependienteTipo.Correct)
             {
                 if (IdDependiente == null)
                 {
                     dependiente.Empleado = new ML.Empleado();
-                   // dependiente.Empleado.NumeroEmpleado = Session["NumeroEmpleado"].ToString();
+                    dependiente.Empleado.NumeroEmpleado = HttpContext.Session.GetString("NumeroEmpleado");
                     dependiente.DependienteTipo = new ML.DependienteTipo();
-                    dependiente.DependienteTipo.DependienteTipos = resultDependienteTipos.Objects;
+                    dependiente.DependienteTipo.DependienteTipos = resultDependienteTipo.Objects;
                     return View(dependiente);
                 }
                 else
                 {
-                    ML.Result resultDependiente = BL.Dependiente.DependienteGetBy(IdDependiente.Value);
+                    ML.Result resultDependiente = BL.Dependiente.DependienteGetById(IdDependiente.Value);
                     if (resultDependiente.Correct)
                     {
                         dependiente = ((ML.Dependiente)resultDependiente.Object);
-                        dependiente.DependienteTipo.DependienteTipos = resultDependienteTipos.Objects;
+                        dependiente.DependienteTipo.DependienteTipos = resultDependienteTipo.Objects;
                         return View(dependiente);
 
                     }
@@ -107,9 +109,10 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult DependienteForm(ML.Dependiente dependiente)
         {
-            if (dependiente.IdDependiente == null)
+            ML.Result result = new ML.Result();
+            if (dependiente.IdDependiente == 0)
             {
-                ML.Result result = BL.Dependiente.DependienteAdd(dependiente);
+                result = BL.Dependiente.DependienteAdd(dependiente);
                 if (result.Correct)
                 {
                     ViewBag.Mensaje = "Registro exitoso";
@@ -122,8 +125,8 @@ namespace PL.Controllers
             }
             else
             {
-                ML.Result result = BL.Dependiente.DependienteUpdate(dependiente);
-                if (!result.Correct)
+                result = BL.Dependiente.DependienteUpdate(dependiente);
+                if (result.Correct)
                 {
                     ViewBag.Mensaje = "Modificacion exitosa";
                 }

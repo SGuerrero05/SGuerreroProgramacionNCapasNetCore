@@ -240,5 +240,41 @@ namespace BL
             }
             return result;
         }
+        public static ML.Result UsuarioGetByUserName(string UserName)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
+                {
+                    var obj = context.Usuarios.FromSqlRaw($"UsuarioGetByUserName '{UserName}'").AsEnumerable().FirstOrDefault();
+                    if (obj != null)
+                    {
+
+                        ML.Usuario usuario = new ML.Usuario();
+                        usuario.IdUsuario = obj.IdUsuario;
+                   
+                        usuario.UserName = obj.UserName;
+                        usuario.Password = obj.Password;
+ 
+
+                        result.Object = usuario;
+
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+            return result;
+        }
     }
 }

@@ -1,0 +1,82 @@
+﻿@model ML.Poliza
+@{
+    ViewBag.Title = "PolizaForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PolizaForm</h2>
+
+<h2>Form</h2>
+<div class=" ="row">
+<div class="container">
+    <div class="col-md-12">
+        <h5>Ingrese los datos de la poliza</h5>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("PolizaForm", "Poliza", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="hidden" style="display: none;">
+                    <div class="col-md-4 col-lg-12 col-sm-6">
+                        @Html.LabelFor(model => model.IdPoliza)
+                        @Html.TextBoxFor(model => model.IdPoliza, new { @class = "form-control", @id = "txtIdPoliza" })
+                        @Html.ValidationMessageFor(model => model.IdPoliza)
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-lg-12 col-sm-6">
+                        @Html.LabelFor(model => model.Nombre)
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-lg-12 col-sm-6">
+                        @Html.LabelFor(model => model.NumeroPoliza)
+                        @Html.TextBoxFor(model => model.NumeroPoliza, new { @class = "form-control", @id = "txtNumeroPoliza" })
+                        @Html.ValidationMessageFor(model => model.NumeroPoliza)
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-12 col-sm-6">
+                        @Html.LabelFor(model => model.SubPoliza.IdSubPoliza)
+                        @Html.DropDownListFor(model => model.SubPoliza.IdSubPoliza, new SelectList(Model.SubPoliza.SubPolizas, "IdSubPoliza", "Nombre"), "Seleccione la SubPoliza", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SubPoliza.IdSubPoliza)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-md-4 col-12 col-sm-6">
+                        @Html.LabelFor(model => model.Usuario.IdUsuario)
+                        @Html.DropDownListFor(model => model.Usuario.IdUsuario, new SelectList(Model.Usuario.Usuarios, "IdUsuario", "Nombre"), "Selecciona el UserName", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Usuario.IdUsuario)
+                    </div>
+                </div>
+
+                
+                <div class="col">
+                    <div class="col-md-3">
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                        @Html.ActionLink("RegresarAseguradora", "AseguradoraGetAll", "Aseguradora", htmlAttributes: new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>

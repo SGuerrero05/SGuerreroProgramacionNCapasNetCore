@@ -16,7 +16,25 @@
 </div>
 
 @using (Html.BeginForm("EmpleadoGetAll","Empleado",FormMethod.Post,new{enctype = "multipart/form-data"}))
-{      <div class="col">
+{      @*  <div class="col">
+                    <div class="col-md-4 col-12 col-sm-6 ">
+
+                    @Html.LabelFor(model => model.Empresa.IdEmpresa)
+                    @if (Model.Empresa.Empresas == null)
+                {
+                  @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(String.Empty, "Value", "Text"), "Seleccionar una empresa", new { @class = "form-control"})
+                  @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
+                }
+                    else
+                {
+                    @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Seleccionar la empresa", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
+                }
+                 </div>
+
+                </div>*@
+
+                 <div class="col">
                     <div class="col-md-4 col-lg-12 col-sm-6">
                         @Html.LabelFor(model => model.Nombre)
                         @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
@@ -41,10 +59,10 @@
                     </div>
                 </div>
 
-               @*  <div class="col">
+            @*     <div class="col">
                     <div class="col-md-4 col-12 col-sm-6">
                         @Html.LabelFor(model => model.Empresa.IdEmpresa)
-                        @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona la empresa", new { @class = "form-control" })
+                         @Html.TextBoxFor(model => model.Empresa.IdEmpresa, new { @class = "form-control", @id = "txtEmpresa" })
                         @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
                     </div>
                 </div>*@

@@ -15,37 +15,37 @@
 
 </div>
 
-@using (Html.BeginForm("DependienteGet","Dependiente",FormMethod.Post,new{enctype = "multipart/form-data"}))
+@using (Html.BeginForm("EmpleadoDGetAll","Dependiente",FormMethod.Post,new{enctype = "multipart/form-data"}))
 {      <div class="col">
                     <div class="col-md-4 col-lg-12 col-sm-6">
-                        @Html.LabelFor(model => model.Nombre)
-                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
-                        @Html.ValidationMessageFor(model => model.Nombre)
+                        @Html.LabelFor(model => model.Empleado.Nombre)
+                        @Html.TextBoxFor(model => model.Empleado.NumeroEmpleado, new { @class = "form-control", @readonly="readonly" })
+                        @Html.ValidationMessageFor(model => model.Empleado.Nombre)
 
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="col-md-4 col-12 col-sm-6">
-                        @Html.LabelFor(model => model.ApellidoPaterno)
-                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
-                        @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                        @Html.LabelFor(model => model.Empleado.ApellidoPaterno)
+                        @Html.TextBoxFor(model => model.Empleado.ApellidoPaterno, new { @class = "form-control", @readonly="readonly" })
+                        @Html.ValidationMessageFor(model => model.Empleado.ApellidoPaterno)
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="col-md-4 col-12 col-sm-6">
-                        @Html.LabelFor(model => model.ApellidoMaterno)
-                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
-                        @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                        @Html.LabelFor(model => model.Empleado.ApellidoMaterno)
+                        @Html.TextBoxFor(model => model.Empleado.ApellidoMaterno, new { @class = "form-control", @readonly="readonly" })
+                        @Html.ValidationMessageFor(model => model.Empleado.ApellidoMaterno)
                     </div>
                 </div>
 
-                 <div class="col">
+                 @*<div class="col">
                      <div class="col-md-3">
                          <input type ="submit" value="Buscar" class="btn btn-success"/>
                      </div>
-                       </div>
+                       </div>*@
 }
           
 @*<div class="row">*@

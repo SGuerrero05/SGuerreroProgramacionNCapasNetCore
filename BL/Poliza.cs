@@ -7,16 +7,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BL
 {
-    public class Dependiente
+    public class Poliza
     {
-        public static ML.Result DependienteAdd(ML.Dependiente dependiente)
+        public static ML.Result PolizaAdd(ML.Poliza poliza)
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"DependienteAdd '{dependiente.Empleado.NumeroEmpleado}', '{dependiente.Nombre}', '{dependiente.ApellidoPaterno}', '{dependiente.ApellidoMaterno}', '{dependiente.FechaNacimiento}', '{dependiente.EstadoCivil}', '{dependiente.Genero}', '{dependiente.Telefono}', '{dependiente.Rfc}', {dependiente.DependienteTipo.IdDependienteTipo}");
+                    var query = context.Database.ExecuteSqlRaw($"PolizaAdd '{poliza.Nombre}', '{poliza.NumeroPoliza}', {poliza.SubPoliza.IdSubPoliza}, {poliza.Usuario.IdUsuario}");
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+            return result;
+        }
+
+        public static ML.Result PolizaUpdate(ML.Poliza poliza)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
+                {
+                    var query = context.Database.ExecuteSqlRaw($"PolizaUpdate {poliza.IdPoliza}, '{poliza.Nombre}', '{poliza.NumeroPoliza}', {poliza.SubPoliza.IdSubPoliza}, {poliza.Usuario.IdUsuario}");
                     if (query > 0)
                     {
                         result.Correct = true;
@@ -37,14 +66,14 @@ namespace BL
             return result;
         }
 
-        public static ML.Result DependienteUpdate(ML.Dependiente dependiente)
+        public static ML.Result PolizaDelete(ML.Poliza poliza)
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"DependienteUpdate {dependiente.IdDependiente}, '{dependiente.Empleado.NumeroEmpleado}', '{dependiente.Nombre}', '{dependiente.ApellidoPaterno}', '{dependiente.ApellidoMaterno}', '{dependiente.FechaNacimiento}', '{dependiente.EstadoCivil}', '{dependiente.Genero}', '{dependiente.Telefono}', '{dependiente.Rfc}', {dependiente.DependienteTipo.IdDependienteTipo}");
+                    var query = context.Database.ExecuteSqlRaw($"PolizaDelete {poliza.IdPoliza}");
                     if (query > 0)
                     {
                         result.Correct = true;
@@ -55,33 +84,6 @@ namespace BL
                     }
                 }
 
-            }
-            catch (Exception ex)
-            {
-                result.Correct = false;
-                result.ErrorMessage = ex.Message;
-                result.Ex = ex;
-            }
-            return result;
-        }
-
-        public static ML.Result DependienteDelete(ML.Dependiente dependiente)
-        {
-            ML.Result result = new ML.Result();
-            try
-            {
-                using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
-                {
-                    var query = context.Database.ExecuteSqlRaw($"DependienteUpdate {dependiente.IdDependiente}");
-                    if (query > 1)
-                    {
-                        result.Correct = true;
-                    }
-                    else
-                    {
-                        result.Correct = false;
-                    }
-                }
 
             }
             catch (Exception ex)
@@ -93,36 +95,32 @@ namespace BL
             return result;
         }
 
-        public static ML.Result DependienteGetByEmpleado(string NumeroEmpleado)
+        public static ML.Result PolizaGetAll()
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var query = context.Dependientes.FromSqlRaw($"DependienteGetByEmpleado '{NumeroEmpleado}'").ToList();
+                    var query = context.Polizas.FromSqlRaw($"PolizaGetAll").ToList();
                     result.Objects = new List<object>();
-
                     if (query != null)
                     {
                         foreach (var obj in query)
                         {
-                            ML.Dependiente dependiente = new ML.Dependiente();
-                            dependiente.IdDependiente = obj.IdDependiente;
-                            dependiente.Empleado = new ML.Empleado();
-                            dependiente.Empleado.NumeroEmpleado = obj.NumeroEmpleado;
-                            dependiente.Nombre = obj.Nombre;
-                            dependiente.ApellidoPaterno = obj.ApellidoPaterno;
-                            dependiente.ApellidoMaterno = obj.ApellidoMaterno;
-                            dependiente.FechaNacimiento = obj.FechaNacimiento;
-                            dependiente.EstadoCivil = obj.EstadoCivil;
-                            dependiente.Genero = obj.Genero;
-                            dependiente.Telefono = obj.Telefono;
-                            dependiente.Rfc  = obj.Rfc;
-                            dependiente.DependienteTipo = new ML.DependienteTipo();
-                            dependiente.DependienteTipo.IdDependienteTipo = obj.IdDependienteTipo.Value;
+                            ML.Poliza poliza = new ML.Poliza();
 
-                            result.Objects.Add(dependiente);
+                            poliza.IdPoliza = obj.IdPoliza;
+                            poliza.Nombre = obj.Nombre;
+                            poliza.NumeroPoliza = obj.NumeroPoliza;
+                            poliza.FechaCreacion = obj.FechaCreacion.ToString();
+                            poliza.FechaModificacion = obj.FechaModificacion.ToString();
+                            poliza.SubPoliza = new ML.SubPoliza();
+                            poliza.SubPoliza.IdSubPoliza = obj.IdSubPoliza.Value;
+                            poliza.Usuario = new ML.Usuario();
+                            poliza.Usuario.IdUsuario = obj.IdUsuario.Value;
+
+                            result.Objects.Add(poliza);
                         }
                         result.Correct = true;
                     }
@@ -130,7 +128,6 @@ namespace BL
                     {
                         result.Correct = false;
                     }
-
                 }
             }
             catch (Exception ex)
@@ -141,33 +138,31 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result DependienteGetById(int IdDependiente)
+        public static ML.Result PolizaGetById(int IdPoliza)
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.SGuerreroProgramacionNcapasContext context = new DL.SGuerreroProgramacionNcapasContext())
                 {
-                    var obj = context.Dependientes.FromSqlRaw($"DependienteGetById {IdDependiente}").AsEnumerable().FirstOrDefault();
+                    var obj = context.Polizas.FromSqlRaw($"PolizaGetById {IdPoliza}").AsEnumerable().FirstOrDefault();
+                  
                     if (obj != null)
                     {
-                        
-                            ML.Dependiente dependiente = new ML.Dependiente();
-                            dependiente.IdDependiente = obj.IdDependiente;
-                            dependiente.Empleado = new ML.Empleado();
-                            dependiente.Empleado.NumeroEmpleado = obj.NumeroEmpleado;
-                            dependiente.Nombre = obj.Nombre;
-                            dependiente.ApellidoPaterno = obj.ApellidoPaterno;
-                            dependiente.ApellidoMaterno = obj.ApellidoMaterno;
-                            dependiente.FechaNacimiento = obj.FechaNacimiento;
-                            dependiente.EstadoCivil = obj.EstadoCivil;
-                            dependiente.Genero = obj.Genero;
-                            dependiente.Telefono = obj.Telefono;
-                            dependiente.Rfc = obj.Rfc;
-                            dependiente.DependienteTipo = new ML.DependienteTipo();
-                            dependiente.DependienteTipo.IdDependienteTipo = obj.IdDependienteTipo.Value;
+                       
+                            ML.Poliza poliza = new ML.Poliza();
 
-                        result.Object = dependiente;
+                            poliza.IdPoliza = obj.IdPoliza;
+                            poliza.Nombre = obj.Nombre;
+                            poliza.NumeroPoliza = obj.NumeroPoliza;
+                            poliza.FechaCreacion = obj.FechaCreacion.ToString();
+                            poliza.FechaModificacion = obj.FechaModificacion.ToString();
+                            poliza.SubPoliza = new ML.SubPoliza();
+                            poliza.SubPoliza.IdSubPoliza = obj.IdSubPoliza.Value;
+                            poliza.Usuario = new ML.Usuario();
+                            poliza.Usuario.IdUsuario = obj.IdUsuario.Value;
+
+                            result.Object = poliza;
                         
                         result.Correct = true;
                     }
@@ -175,7 +170,6 @@ namespace BL
                     {
                         result.Correct = false;
                     }
-
                 }
             }
             catch (Exception ex)
@@ -188,4 +182,5 @@ namespace BL
         }
     }
 }
+
 
